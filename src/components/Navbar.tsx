@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
-import { signInWithRedirect, signOut } from 'firebase/auth'
+import { signInWithPopup, signOut } from 'firebase/auth'
 import { auth, Providers } from '../config/firebase'
 
 function Navbar() {
@@ -15,7 +15,7 @@ function Navbar() {
 
   // The sign in button
   const signInOnClick = async () => {
-    const response = await signInWithRedirect(auth, Providers.google);
+    const response = await signInWithPopup(auth, Providers.google);
     // const userCred = await getRedirectResult(auth);
     if ( response ) {
       location.reload();
@@ -47,30 +47,30 @@ function Navbar() {
         { isVisible ? ( 
           <div className='w-full block flex-grow items-center'>
             <div className='text-sm.lg:flex-grow'>
-              <Button className='p-3 m-5 bg-teal-400 justify-center'>
+              <Button className='p-3 m-3 bg-slate-400 rounded justify-center'>
                 <div>
-                  <Link to='/' onClick={ clicked } className='flex place-items-center mt-4 lg:inline-block lg:mt-0
-                   text-teal-200 hover:text-white mr-4'>
+                  <Link to='/' onClick={ clicked } className='flex place-items-center lg:inline-block lg:mt-0
+                   text-black hover:text-white mr-4'>
                     Home
                   </Link>
                 </div>
               </Button>
 
               <Button 
-                className='p-3 m-5 bg-teal-400 justify-center'>
+                className='p-3 m-3 bg-slate-400 rounded justify-center'>
                 <div>
-                  <Link to='/dashboard' onClick={ clicked } className='flex place-items-center mt-4 lg:inline-block lg:mt-0
-                   text-teal-200 hover:text-white mr-4'>
+                  <Link to='/dashboard' onClick={ clicked } className='flex place-items-center lg:inline-block lg:mt-0
+                   text-black hover:text-white mr-4'>
                     Dashboard
                   </Link>
                 </div>
               </Button>
 
               <Button 
-                className='p-3 m-5 bg-teal-400 justify-center'>
+                className='p-3 m-3 bg-slate-400 rounded justify-center'>
                 <div>
-                  <Link to='/contact' onClick={ clicked } className='flex place-items-center mt-4 lg:inline-block lg:mt-0
-                   text-teal-200 hover:text-white mr-4'>
+                  <Link to='/contact' onClick={ clicked } className='flex place-items-center lg:inline-block lg:mt-0
+                   text-black hover:text-white mr-4'>
                     Contact
                   </Link>
                 </div>
@@ -79,19 +79,19 @@ function Navbar() {
             {
               !auth.currentUser ?
 
-              <Button className='p-3 m-5 bg-yellow-300 justify-center'>
+              <Button className='p-3 m-3 bg-slate-400 rounded justify-center'>
                 <div>
-                  <Link to="/" onClick={ () => { signInOnClick()}} className="flex place-items-center mt-4
-                      lg:inline-block lg:mt-0 text-white hover:text-yellow">
+                  <Link to="/" onClick={ () => { signInOnClick()}} className="flex place-items-center
+                      lg:inline-block lg:mt-0 text-black hover:text-white">
                         Sign In
                       </Link>
                 </div>
               </Button>
               :
-              <Button className='p-3 m-5 bg-yellow-300 justify-center'>
+              <Button className='p-3 m-3 bg-slate-400 rounded justify-center'>
                 <div>
-                  <Link to="/" onClick={ () => { signOutOnClick()}} className="flex place-items-center mt-4
-                      lg:inline-block lg:mt-0 text-white hover:text-yellow">
+                  <Link to="/" onClick={ () => { signOutOnClick()}} className="flex place-items-center
+                      lg:inline-block lg:mt-0 text-black hover:text-white">
                         Sign Out
                       </Link>
                 </div>

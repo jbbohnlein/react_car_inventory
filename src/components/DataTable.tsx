@@ -4,7 +4,7 @@ import Modal from "./Modal"
 import { server_calls } from "../api/server"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useGetData } from "../custom-hooks/FetchData"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, redirect } from "react-router-dom"
 
 
 const columns: GridColDef[] = [
@@ -17,67 +17,123 @@ const columns: GridColDef[] = [
 ]
 
 function DataTable() {
-    // const [ open, setOpen ] = useState(false);
-    const [ open, setOpen ] = React.useState(false);
+    const [ open, setOpen ] = useState(false);
     const { carData, getData } = useGetData();
     const [ selectionModel, setSelectionModel ] = useState<string[]>([])
-    const navigate = useNavigate();
-
+  
     const handleOpen = () => {
-        setOpen(true)
+      setOpen(true)
     }
-
-    const handleclose = () => {
-        setOpen(false)
+  
+    const handleClose = () => {
+      setOpen(false)
     }
-
+  
     const deleteData = () => {
-        server_calls.delete(selectionModel[0]);
-        getData();
-        console.log(`Selection model: ${selectionModel}`);
-        setTimeout( () => { navigate("/dashboard") }, 2000)
+      server_calls.delete(selectionModel[0]);
+      getData();
+      console.log(`Selection model: ${selectionModel}`)
+      setTimeout( () => { window.location.reload() }, 500)
     }
-
+  
     return (
-    <>
-    {/*  Modal pop-up that lets you put in car make, model etc*/}
-    <Modal 
-        id={selectionModel}
-        open={open}
-        onClose={handleclose}
-    />
-
-
-    {/* Buttons section for controlling CRUD operations */}
-    <div className="flex flex-row">
-        <div>
-            <button 
-                className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white"
-                onClick={() => handleOpen()}
+      <>
+          <Modal 
+              id={selectionModel}
+              open={open}
+              onClose={handleClose}
+          />
+          <div className='flex flex-row'>
+              <div>
+                  <button
+                      className='p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white'
+                      onClick={() => handleOpen()}
+                  >
+                      Add New Car
+                  </button>
+              </div>
+              <Button onClick={handleOpen} className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white" >Update</Button>
+              <Button onClick={deleteData} className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white" >Delete</Button>
+          </div>
+          <div className={ open ? "hidden" : "container mx-10 my-5 flex flex-col"}
+            style={{ height: 400, width: '100%' }}
             >
-                Create New Car
-            </button>
-        </div>
-        <Button onClick={handleOpen} className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white">Update</Button>
-        <Button onClick={deleteData} className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white">Delete</Button>    
-    </div>    
+              <h2 className="p-3 bg-slate-300 my-2 rounded">My Garage</h2>
+              <DataGrid rows={carData} columns={columns} rowsPerPageOptions={[5]}
+              checkboxSelection={true} 
+              onSelectionModelChange={ (item:any) => {
+                setSelectionModel(item)
+              }}
+              />
+          </div>
+      </>
+    )
+  }
+  
+  export default DataTable
 
-    {/* Data Table section */}
-    <div className={ open ? "hidden" : "container mx-10 my-5 flex flex-col"}
-        style={{ height: 400, width: '100%' }}
-    >
-        <h2 className="p-3 bg-slate-300 my-2 rounded">My Garage</h2>
-        <DataGrid rows={carData} columns={columns} rowsPerPageOptions={[5]}
-        checkboxSelection={true} 
-        // Whatever is selected/checked (onSelectionModelChange), set the Selection Model to that item. 
-        // This will stash it up above in the selectionModel, which we'll use to do some stuff with it.
-        onSelectionModelChange={ (item:any) => {
-            setSelectionModel(item)
-        }}
-        />
-    </div>
-    </>
-  )
-}
+// function DataTable() {
+//     // const [ open, setOpen ] = useState(false);
+//     const [ open, setOpen ] = React.useState(false);
+//     const { carData, getData } = useGetData();
+//     const [ selectionModel, setSelectionModel ] = useState<string[]>([])
+//     const navigate = useNavigate();
 
-export default DataTable
+//     const handleOpen = () => {
+//         setOpen(true)
+//     }
+
+//     const handleclose = () => {
+//         setOpen(false)
+//     }
+
+//     const deleteData = () => {
+//         server_calls.delete(selectionModel[0]);
+//         getData();
+//         console.log(`Selection model: ${selectionModel}`);
+//         setTimeout( () => { redirect("/dashboard") }, 2000)
+//     }
+
+//     return (
+//     <>
+//     {/*  Modal pop-up that lets you put in car make, model etc*/}
+//     <Modal 
+//         id={selectionModel}
+//         open={open}
+//         onClose={handleclose}
+//     />
+
+
+//     {/* Buttons section for controlling CRUD operations */}
+//     <div className="flex flex-row">
+//         <div>
+//             <button 
+//                 className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white"
+//                 onClick={() => handleOpen()}
+//             >
+//                 Create New Car
+//             </button>
+//         </div>
+//         <Button onClick={handleOpen} className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white">Update</Button>
+//         <Button onClick={deleteData} className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white">Delete</Button>    
+//     </div>    
+
+//     {/* Data Table section */}
+//     <div className={ open ? "hidden" : "container mx-10 my-5 flex flex-col"}
+//         style={{ height: 400, width: '100%' }}
+//     >
+//         <h2 className="p-3 bg-slate-300 my-2 rounded">My Garage</h2>
+//         <DataGrid rows={carData} columns={columns} rowsPerPageOptions={[5]}
+//         checkboxSelection={true} 
+//         // Whatever is selected/checked (onSelectionModelChange), set the Selection Model to that item. 
+//         // This will stash it up above in the selectionModel, which we'll use to do some stuff with it.
+//         onSelectionModelChange={ (item:any) => {
+//             setSelectionModel(item)
+//         }}
+//         />
+//     </div>
+//     </>
+//   )
+// }
+
+// export default DataTable
