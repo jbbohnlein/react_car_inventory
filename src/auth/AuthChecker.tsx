@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signInWithPopup } from 'firebase/auth'
+import { signInWithRedirect } from 'firebase/auth'
 import { auth, Providers } from '../config/firebase'
 
 interface Props {
@@ -17,7 +17,7 @@ const AuthChecker = ({ children }: Props) => {
     useEffect(() => {
         if (!auth.currentUser) {
             navigate('../')
-            signInWithPopup(auth, Providers.google)
+            signInWithRedirect(auth, Providers.google)
         }
 
         // Must include the brackets or else useEffect will try to run constantly:

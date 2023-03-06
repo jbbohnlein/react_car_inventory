@@ -5,6 +5,7 @@ import { chooseMake, chooseModel, chooseYear, chooseColor } from "../redux/slice
 
 import { useForm } from 'react-hook-form'
 import { useDispatch, useStore } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 interface CarFormProps {
   id?: string[]
@@ -14,6 +15,7 @@ const CarForm = (props: CarFormProps) => {
   const { register, handleSubmit } = useForm({})
   const dispatch = useDispatch();
   const store = useStore();
+  const navigate = useNavigate();
   
   const onSubmit = (data: any, event: any) => {
     console.log(`ID: ${typeof props.id}`);
@@ -23,7 +25,7 @@ const CarForm = (props: CarFormProps) => {
     if (props.id && props.id.length > 0) {
       server_calls.update(props.id[0], data)
       console.log(`Updated: ${data.year} ${data.make} ${data.model} ${props.id}`)
-      setTimeout(() => {window.location.reload()}, 2000);
+      setTimeout(() => {window.location.reload()}, 500);
       event.target.reset()
     
     } else {
@@ -41,7 +43,8 @@ const CarForm = (props: CarFormProps) => {
       server_calls.create(store.getState());
       console.log(`Created: ${data.year} ${data.make} ${data.model} ${props.id}`)
       // reload the page after 2 seconds:
-      setTimeout(() => {window.location.reload()}, 2000);
+      setTimeout(() => {navigate("/dashboard")}, 2000);
+      event.target.reset()
 
     } 
   }

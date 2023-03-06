@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
-import { signInWithPopup, signOut } from 'firebase/auth'
+import { signInWithRedirect, signOut } from 'firebase/auth'
 import { auth, Providers } from '../config/firebase'
 
 function Navbar() {
@@ -15,8 +15,9 @@ function Navbar() {
 
   // The sign in button
   const signInOnClick = async () => {
-    const response = await signInWithPopup(auth, Providers.google);
-    if ( response.user ) {
+    const response = await signInWithRedirect(auth, Providers.google);
+    // const userCred = await getRedirectResult(auth);
+    if ( response ) {
       location.reload();
     }
   }

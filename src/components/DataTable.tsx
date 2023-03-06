@@ -4,6 +4,7 @@ import Modal from "./Modal"
 import { server_calls } from "../api/server"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useGetData } from "../custom-hooks/FetchData"
+import { useNavigate } from "react-router-dom"
 
 
 const columns: GridColDef[] = [
@@ -16,9 +17,11 @@ const columns: GridColDef[] = [
 ]
 
 function DataTable() {
-    const [ open, setOpen ] = useState(false);
+    // const [ open, setOpen ] = useState(false);
+    const [ open, setOpen ] = React.useState(false);
     const { carData, getData } = useGetData();
     const [ selectionModel, setSelectionModel ] = useState<string[]>([])
+    const navigate = useNavigate();
 
     const handleOpen = () => {
         setOpen(true)
@@ -32,7 +35,7 @@ function DataTable() {
         server_calls.delete(selectionModel[0]);
         getData();
         console.log(`Selection model: ${selectionModel}`);
-        setTimeout( () => { window.location.reload() }, 2000)
+        setTimeout( () => { navigate("/dashboard") }, 2000)
     }
 
     return (
@@ -48,8 +51,10 @@ function DataTable() {
     {/* Buttons section for controlling CRUD operations */}
     <div className="flex flex-row">
         <div>
-            <button className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white"
-            onClick={() => handleOpen()}>
+            <button 
+                className="p-3 bg-slate-300 m-3 rounded hover:bg-slate-800 hover:text-white"
+                onClick={() => handleOpen()}
+            >
                 Create New Car
             </button>
         </div>

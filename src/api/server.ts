@@ -13,7 +13,7 @@ export const server_calls = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'x-access-token': `Bearer ${token}`,
+                'x-access-token': `Bearer 6e96b74e8bfba7cbe3f2cc67bd45096d74baece1a83b666c`,
             }
         });
 
@@ -32,7 +32,7 @@ export const server_calls = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-access-token': `Bearer ${token}`,
+                'x-access-token': `Bearer 6e96b74e8bfba7cbe3f2cc67bd45096d74baece1a83b666c`,
             },
             body: JSON.stringify(data)
         });
@@ -52,7 +52,7 @@ export const server_calls = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-access-token': `Bearer ${token}`,
+                'x-access-token': `Bearer 6e96b74e8bfba7cbe3f2cc67bd45096d74baece1a83b666c`,
             },
             body: JSON.stringify(data)
         });
@@ -71,7 +71,7 @@ export const server_calls = {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'x-access-token': `Bearer ${token}`,
+                'x-access-token': `Bearer 6e96b74e8bfba7cbe3f2cc67bd45096d74baece1a83b666c`,
             },
         });
 

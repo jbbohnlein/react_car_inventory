@@ -1,4 +1,4 @@
-import Background from '../assets/images/jordan-graff-9TBgvuPAe0Y-unsplash.jpg'
+import Background from '../assets/images/parking_garage.jpg'
 
 function Home() {
   return (

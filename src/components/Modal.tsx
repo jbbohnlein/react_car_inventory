@@ -1,3 +1,4 @@
+import React from "react";
 import CarForm from "./CarForm";
 
 //  Did this as type Props = {} in the code-along:
@@ -13,7 +14,8 @@ const Modal = ( props: Props ) => {
     if ( !props.open ) return (<></>);
     
     return (
-        <div onClick={ props.onClose } 
+        <div 
+            onClick={ props.onClose } 
             className='fixed w-full h-full flex overflow-auto z-1 justify-center align-middle
                  bg-gray-300 bg-opacity-25'
         >
